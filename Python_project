@@ -1,0 +1,76 @@
+print("        WELCOME \nNOW ITS A TIME TO PLAY \n        'QUIZ' ")
+print("check your brain while giving answer of comman questions")
+
+print("\n\n\n          INSTRUCTION")
+print("\n1. Enter your name.")
+print("\n2. After entering your name , ten questions will come one by one.")
+print("\n3. You just have to write the corrct option only. \n  you have to write in same way as it was in option ")
+print("\n4. writing correct option number will be invalid.")
+print("\n5. There is no time limit.")
+print("\n6. for the next question you just have to press enter.")
+print("\n\n........GIVE YOUR BEST........")
+print(".........now its a time to begin.........")
+print("\n")
+name=str(input("enter your name  ----- "))
+
+def quiz():
+            import mysql.connector as myc
+            import random
+
+            con=myc.connect(host="localhost",user="root",passwd="",database="school")
+
+            cur=con.cursor()
+            score=0
+            query="select   * from quiz "
+            cur.execute(query)
+            print("\n")
+            i=random.randint(1,21)
+            rs=cur.fetchall()
+            j=1
+            for i in range (i,i+10):
+                        s=[]
+                        s=rs[i]
+                        print("Question---",j,".",s[1])
+                        print("option.1---",s[2])
+                        print("option.2---",s[3])
+                        print("option.3---",s[4])
+                        answer=input("enter the correct answer ")
+                        if answer==s[5]:
+                                    score=score+10
+                                    print("ur answer is coorect")
+                                    print("\n")
+                        else:
+                                    print("ur ans. is wrong")
+                                    print("correct option is ",s[5])
+                                    print("\n")
+                        j=j+1
+                        print("-----------------------------------------------------------------------------")
+                        
+            s=str(score)            
+            print("your score is",s,"out of 100")
+            d=input("do u want to see others score (y or n)--")
+            if(d=='y' or d=='Y'):
+                        f=open("quiz.txt",'a')
+                        f.write("\n\n")
+                        f.write(name)
+                        f.write("\n")
+                        f.write("score-------")
+                        f.write(s)
+                        f.write("/100")
+                        f.seek(0)
+                        f.close()
+                        print("\n")
+                        f=open("quiz.txt",'r')
+                        x=f.read()
+                        print(x)
+                        print("--------------------------------------")
+                        print("--------------------------------------")
+                        f.close()
+quiz()            
+c=input("do you want to play again (y or n)")
+if(c=='y' or c=='Y'):
+            print("\n\n           ------NEW CHANCE------")
+            quiz()
+            
+
+            
